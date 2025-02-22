@@ -3,9 +3,9 @@ const connectDB = require("./db");
 exports.handler = async (event) => {
   try {
     const collection = await connectDB();
-    const { search, sortField, sortOrder = "asc" } = event.queryStringParameters;
+    const { topic, sortField, sortOrder = "asc" } = event.queryStringParameters;
 
-    const query = search ? { text: new RegExp(search, "i") } : {};
+    const query = topic ? { topic: new RegExp(topic, "i") } : {};
     const sort = sortField ? { [sortField]: sortOrder === "desc" ? -1 : 1 } : {};
 
     const questions = await collection.find(query).sort(sort).toArray();
@@ -13,7 +13,7 @@ exports.handler = async (event) => {
     return { 
       statusCode: 200, 
       headers: {
-        "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain if needed)
+        "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain later)
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type"
       },
