@@ -8,11 +8,11 @@ exports.handler = async (event) => {
 
     if (!ObjectId.isValid(id)) return { statusCode: 400, body: JSON.stringify({ error: "Invalid ID" }) };
 
-    const question = await collection.findOne({ _id: new ObjectId(id) });
+    const entity = await collection.findOne({ _id: new ObjectId(id) });
 
-    if (!question) return { statusCode: 404, body: JSON.stringify({ error: "Question not found" }) };
+    if (!entity) return { statusCode: 404, body: JSON.stringify({ error: "Question not found" }) };
 
-    return { statusCode: 200, body: JSON.stringify(question) };
+    return { statusCode: 200, body: JSON.stringify(entity) };
   } catch (error) {
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
