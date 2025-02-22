@@ -10,8 +10,17 @@ exports.handler = async (event) => {
 
     const questions = await collection.find(query).sort(sort).toArray();
 
-    return { statusCode: 200, body: JSON.stringify(questions) };
+    return { 
+      statusCode: 200, 
+      headers: {
+        "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain if needed)
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+      },
+      body: JSON.stringify(questions) };
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+    return { 
+      statusCode: 500, 
+      body: JSON.stringify({ error: error.message }) };
   }
 };
