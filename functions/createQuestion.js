@@ -1,6 +1,18 @@
 const connectDB = require("./db");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Change to your frontend domain if needed
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+      body: "",
+    };
+  }
+  
   try {
     const collection = await connectDB();
     const { question, answers, correctAnswerId, topic } = JSON.parse(event.body);
