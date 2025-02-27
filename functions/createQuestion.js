@@ -1,4 +1,5 @@
 const connectDB = require("./db");
+const jwt = require("jsonwebtoken");
 
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
@@ -11,6 +12,19 @@ exports.handler = async (event) => {
       },
       body: "",
     };
+  }
+
+  const token = event.headers.authorization?.split(" ")[1]; 
+  const secretKey = process.env.JWT_SECRET;
+
+  if (!token) {
+    return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized: No token provided" }) };
+  }
+
+  try {
+    jwt.verify(token, secretKey);
+  } catch (error) {
+    return { statusCode: 403, body: JSON.stringify({ error: "Forbidden: Invalid token" }) };
   }
 
   try {
