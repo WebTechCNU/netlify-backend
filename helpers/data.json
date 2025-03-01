@@ -1,0 +1,24 @@
+[
+    {
+        "question": "test? now with python script!",
+        "answers": [
+          "test",
+          "test",
+          "test",
+          "test"
+        ],
+        "correctAnswerId": 3,
+        "topic": "test"
+    },
+    {
+        "question": "test? now with python script 2!",
+        "answers": [
+          "test",
+          "test",
+          "test",
+          "test"
+        ],
+        "correctAnswerId": 3,
+        "topic": "test"
+    }
+]
