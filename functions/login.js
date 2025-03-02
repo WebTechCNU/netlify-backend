@@ -1,6 +1,18 @@
 const jwt = require("jsonwebtoken");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Change to frontend domain in future
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+      body: "",
+    };
+  }
+
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
@@ -15,7 +27,12 @@ exports.handler = async (event) => {
   const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
 
   return {
-    statusCode: 200,
+    statusCode: 200, 
+        headers: {
+          "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        },
     body: JSON.stringify({ token }),
   };
 };
