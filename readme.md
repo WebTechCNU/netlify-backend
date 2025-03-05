@@ -24,7 +24,12 @@ DELETE https://your-site.netlify.app/.netlify/functions/deleteQuestion?id=someID
 
 **to do**
 
-1. jwt auth
-2. skip take
-3. 
+1. ~~jwt auth~~
+2. ~~skip take~~
+3. graphQl query
+4. graphQl mutation
+5. web sockets
+6. logging 
+7. unit tests
+8. 
 
