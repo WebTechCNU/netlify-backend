@@ -3,9 +3,9 @@ const connectDB = require("./dbItems");
 exports.handler = async (event) => {
   try {
     const collection = await connectDB();
-    const { topic, sortField, sortOrder = "asc", skip, take } = event.queryStringParameters;
+    const { category, sortField, sortOrder = "asc", skip, take } = event.queryStringParameters;
 
-    const query = topic ? { topic: new RegExp(topic, "i") } : {};
+    const query = category ? { category: new RegExp(category, "i") } : {};
     const sort = sortField ? { [sortField]: sortOrder === "desc" ? -1 : 1 } : {};
 
     const skipValue = Number.isInteger(parseInt(skip)) ? parseInt(skip) : 0;
