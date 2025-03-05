@@ -1,4 +1,4 @@
-const connectDB = require("./dbItem");
+const connectDB = require("./dbItems");
 
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
