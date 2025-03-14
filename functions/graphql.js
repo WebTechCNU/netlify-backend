@@ -103,6 +103,7 @@ const server = new ApolloServer({
 });
 
 const app = express();
+await server.start();
 server.applyMiddleware({ app });
 
 exports.handler = serverless(app);
