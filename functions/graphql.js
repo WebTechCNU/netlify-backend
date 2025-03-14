@@ -104,14 +104,17 @@ const server = new ApolloServer({
     context: ({ event }) => ({ event }), // pass request event to resolvers
 });
 
+// Start Apollo Server asynchronously
 async function startApolloServer() {
     await server.start();
     server.applyMiddleware({ app });
 }
 
-startApolloServer().then(() => {
-    exports.handler = serverless(app);
-});
+startApolloServer(); // Initialize Apollo Server
+
+// Export handler immediately after initializing the server
+exports.handler = serverless(app);
+
 
 // exports.handler = server.createHandler({
 //     expressGetMiddlewareOptions: {
