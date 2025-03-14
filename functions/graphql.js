@@ -50,7 +50,7 @@ const resolvers = {
             return await collection.find(query).sort(sort).skip(skip).limit(take).toArray();
         },
 
-        question: async (_, { id }) => {
+        questionInterview: async (_, { id }) => {
             const collection = await connectDB();
             return await collection.findOne({ _id: new ObjectId(id) });
         },
