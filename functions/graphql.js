@@ -1,4 +1,7 @@
-const { ApolloServer, gql } = require("apollo-server-lambda");
+// const { ApolloServer, gql } = require("apollo-server-lambda");
+const { ApolloServer, gql } = require("apollo-server-express");
+const express = require("express");
+const serverless = require("serverless-http");
 const connectDB = require("./db");
 const { ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
@@ -99,11 +102,16 @@ const server = new ApolloServer({
     context: ({ event }) => ({ event }), // pass request event to resolvers
 });
 
-exports.handler = server.createHandler({
-    expressGetMiddlewareOptions: {
-        cors: {
-            origin: "*",
-            credentials: true,
-        },
-    },
-});
+const app = express();
+server.applyMiddleware({ app });
+
+exports.handler = serverless(app);
+
+// exports.handler = server.createHandler({
+//     expressGetMiddlewareOptions: {
+//         cors: {
+//             origin: "*",
+//             credentials: true,
+//         },
+//     },
+// });
