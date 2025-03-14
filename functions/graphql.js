@@ -99,4 +99,11 @@ const server = new ApolloServer({
     context: ({ event }) => ({ event }), // pass request event to resolvers
 });
 
-exports.handler = server.createHandler();
+exports.handler = server.createHandler({
+    expressGetMiddlewareOptions: {
+        cors: {
+            origin: "*",
+            credentials: true,
+        },
+    },
+});
