@@ -20,29 +20,29 @@ const authenticate = (event) => {
 };
 
 const typeDefs = gql`
-  type Question {
+  type QuestionInterview {
     id: ID!
-    text: String!
+    question: String!
     answers: [String!]!
-    numberCorrect: Int!
+    correctAnswerId: Int!
     topic: String
   }
 
   type Query {
-    questions(topic: String, skip: Int, take: Int, sortField: String, sortOrder: String): [Question]
-    question(id: ID!): Question
+    questions(topic: String, skip: Int, take: Int, sortField: String, sortOrder: String): [QuestionInterview]
+    questionInterview(id: ID!): QuestionInterview
   }
 
   type Mutation {
-    createQuestion(text: String!, answers: [String!]!, numberCorrect: Int!, topic: String): Question
-    updateQuestion(id: ID!, text: String, answers: [String!], numberCorrect: Int, topic: String): Question
+    createQuestion(question: String!, answers: [String!]!, correctAnswerId: Int!, topic: String): QuestionInterview
+    updateQuestion(id: ID!, question: String, answers: [String!], correctAnswerId: Int, topic: String): QuestionInterview
     deleteQuestion(id: ID!): Boolean
   }
 `;
 
 const resolvers = {
     Query: {
-        questions: async (_, { topic, skip = 0, take = 10, sortField = "text", sortOrder = "asc" }) => {
+        questions: async (_, { topic, skip = 0, take = 10, sortField = "question", sortOrder = "asc" }) => {
             const collection = await connectDB();
             const query = topic ? { topic: new RegExp(topic, "i") } : {};
             const sort = sortField ? { [sortField]: sortOrder === "desc" ? -1 : 1 } : {};
@@ -57,25 +57,25 @@ const resolvers = {
     },
 
     Mutation: {
-        createQuestion: async (_, { text, answers, numberCorrect, topic }, { event }) => {
+        createQuestion: async (_, { question, answers, correctAnswerId, topic }, { event }) => {
             const user = authenticate(event);
             if (!user) throw new Error("Unauthorized");
 
             const collection = await connectDB();
-            const result = await collection.insertOne({ text, answers, numberCorrect, topic });
-            return { id: result.insertedId, text, answers, numberCorrect, topic };
+            const result = await collection.insertOne({ question, answers, correctAnswerId, topic });
+            return { id: result.insertedId, question, answers, correctAnswerId, topic };
         },
 
-        updateQuestion: async (_, { id, text, answers, numberCorrect, topic }, { event }) => {
+        updateQuestion: async (_, { id, question, answers, correctAnswerId, topic }, { event }) => {
             const user = authenticate(event);
             if (!user) throw new Error("Unauthorized");
 
             const collection = await connectDB();
             const updateFields = {};
 
-            if (text) updateFields.text = text;
+            if (question) updateFields.question = question;
             if (answers) updateFields.answers = answers;
-            if (numberCorrect !== undefined) updateFields.numberCorrect = numberCorrect;
+            if (correctAnswerId !== undefined) updateFields.correctAnswerId = correctAnswerId;
             if (topic) updateFields.topic = topic;
 
             await collection.updateOne({ _id: new ObjectId(id) }, { $set: updateFields });
