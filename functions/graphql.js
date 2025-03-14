@@ -24,7 +24,7 @@ const authenticate = (event) => {
 
 const typeDefs = gql`
   type QuestionInterview {
-    id: ID!
+    _id: ID!
     question: String!
     answers: [String!]!
     correctAnswerId: Int!
