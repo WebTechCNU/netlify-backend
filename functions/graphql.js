@@ -103,10 +103,14 @@ const server = new ApolloServer({
 });
 
 const app = express();
-await server.start();
-server.applyMiddleware({ app });
 
-exports.handler = serverless(app);
+exports.handler = async (event, context) => {
+    await server.start();  // Wait for Apollo Server to start
+
+    server.applyMiddleware({ app });
+
+    return serverless(app)(event, context);  // Use serverless-http to handle the response
+};
 
 // exports.handler = server.createHandler({
 //     expressGetMiddlewareOptions: {
