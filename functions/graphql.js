@@ -114,13 +114,3 @@ startApolloServer(); // Initialize Apollo Server
 
 // Export handler immediately after initializing the server
 exports.handler = serverless(app);
-
-
-// exports.handler = server.createHandler({
-//     expressGetMiddlewareOptions: {
-//         cors: {
-//             origin: "*",
-//             credentials: true,
-//         },
-//     },
-// });
