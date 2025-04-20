@@ -1,4 +1,6 @@
 const connectDB = require("./dbContext");
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
 
 exports.handler = async (event) => {
     if (event.httpMethod === "OPTIONS") {
