@@ -25,7 +25,7 @@ exports.handler = async (event) => {
         const decoded = jwt.verify(token, secretKey);
         username = decoded.username;
     } catch (error) {
-        return { statusCode: 403, body: JSON.stringify({ error: "Forbidden: Invalid token" }) };
+        return { statusCode: 403, body: JSON.stringify({ error: "Forbidden: Invalid token", details: error.message}) };
     }
 
 
