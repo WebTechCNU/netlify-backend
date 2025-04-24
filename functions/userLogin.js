@@ -38,8 +38,10 @@ exports.handler = async (event) => {
         return { statusCode: 401, body: JSON.stringify({ error: "Invalid username or password" }) };
     }
 
+    const role = user.role || "user"; 
+
     const secretKey = process.env.JWT_SECRET;
-    const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
+    const token = jwt.sign({ username, role }, secretKey, { expiresIn: "1h" });
 
     return {
         statusCode: 200,

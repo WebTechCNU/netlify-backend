@@ -19,7 +19,7 @@ exports.handler = async (event) => {
         return { statusCode: 405, body: "Method Not Allowed" };
     }
 
-    const { username, password } = JSON.parse(event.body);
+    const { username, password, role } = JSON.parse(event.body);
 
     if (!password) {
         return { statusCode: 400, body: JSON.stringify({ error: "Password is required" }) };
@@ -29,10 +29,10 @@ exports.handler = async (event) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const collection = await connectDB('users');
-    const result = await collection.insertOne({ username, hashedPassword });
+    const result = await collection.insertOne({ username, hashedPassword, role });
 
     const secretKey = process.env.JWT_SECRET;
-    const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
+    const token = jwt.sign({ username, role }, secretKey, { expiresIn: "1h" });
 
     return {
         statusCode: 200, 
