@@ -21,7 +21,7 @@ exports.handler = async (event) => {
 
     const { username, password } = JSON.parse(event.body);
 
-    if (!username || !password) {
+    if (!username || !password || username.trim() === "" || password.trim() === "") {
         return { statusCode: 400, 
             headers: {
                 "Access-Control-Allow-Origin": "*", // Change to frontend domain in future

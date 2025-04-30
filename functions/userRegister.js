@@ -30,6 +30,7 @@ exports.handler = async (event) => {
 
     const collection = await connectDB('users');
     const user = await collection.findOne({ username });
+    
     if(user){
         return { statusCode: 400, body: JSON.stringify({ error: "User already exists" }) };
     }
