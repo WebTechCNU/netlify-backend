@@ -29,6 +29,11 @@ exports.handler = async (event) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const collection = await connectDB('users');
+    const user = await collection.findOne({ username });
+    if(user){
+        return { statusCode: 400, body: JSON.stringify({ error: "User already exists" }) };
+    }
+
     const result = await collection.insertOne({ username, hashedPassword, role });
 
     const secretKey = process.env.JWT_SECRET;
