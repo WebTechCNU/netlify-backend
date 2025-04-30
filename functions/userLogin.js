@@ -22,7 +22,13 @@ exports.handler = async (event) => {
     const { username, password } = JSON.parse(event.body);
 
     if (!username || !password) {
-        return { statusCode: 400, body: JSON.stringify({ error: "Username and password are required" }) };
+        return { statusCode: 400, 
+            headers: {
+                "Access-Control-Allow-Origin": "*", // Change to frontend domain in future
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type",
+            },
+            body: JSON.stringify({ error: "Username and password are required" }) };
     }
 
     const collection = await connectDB('users');
