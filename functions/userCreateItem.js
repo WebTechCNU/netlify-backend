@@ -21,7 +21,11 @@ exports.handler = async (event) => {
     let role = "user";
 
     if (!token) {
-        return { statusCode: 401, body: JSON.stringify({ error: "Unauthorized: No token provided" }) };
+        return { statusCode: 401, headers: {
+            "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }, body: JSON.stringify({ error: "Unauthorized: No token provided" }) };
     }
 
     try {
@@ -30,7 +34,11 @@ exports.handler = async (event) => {
         role = decoded.role;
 
     } catch (error) {
-        return { statusCode: 403, body: JSON.stringify({ error: "Forbidden: Invalid token", details: error.message}) };
+        return { statusCode: 403, headers: {
+            "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type"
+        }, body: JSON.stringify({ error: "Forbidden: Invalid token", details: error.message}) };
     }
 
 
