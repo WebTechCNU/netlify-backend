@@ -25,7 +25,7 @@ exports.handler = async (event) => {
             "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type"
-        }, body: JSON.stringify({ error: "Unauthorized: No token provided" }) };
+        }, body: JSON.stringify({ error: "Unauthorized: No token provided", details: error.message }) };
     }
 
     try {
