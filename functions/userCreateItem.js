@@ -15,12 +15,14 @@ exports.handler = async (event) => {
         };
     }
 
+    console.log("function start userCreateItem, auth");
     const token = event.headers.authorization?.split(" ")[1];
     const secretKey = process.env.JWT_SECRET;
     let username = null;
     let role = "user";
 
     if (!token) {
+        console.log("no token provided");
         return { statusCode: 401, headers: {
             "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -34,6 +36,7 @@ exports.handler = async (event) => {
         role = decoded.role;
 
     } catch (error) {
+        console.log("403 error");
         return { statusCode: 403, headers: {
             "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -50,10 +53,12 @@ exports.handler = async (event) => {
         let result;
         if(role == "admin"){
             result = await collection.insertOne(item);
+            console.log("added item");
         }
         else{
             throw new Error("Unauthorized: Only admins can create items");
         }
+        
         return {
             statusCode: 201,
             headers: {
