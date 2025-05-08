@@ -9,7 +9,7 @@ exports.handler = async (event) => {
             headers: {
                 "Access-Control-Allow-Origin": "*", // Change to frontend domain in future
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
             },
             body: "",
         };
@@ -55,7 +55,7 @@ exports.handler = async (event) => {
             headers: {
                 "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type"
+                "Access-Control-Allow-Headers": "Content-Type, Authorization"
             },
             body: JSON.stringify(items) 
         };
