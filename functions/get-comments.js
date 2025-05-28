@@ -42,6 +42,13 @@ exports.handler = async (event) => {
             body: JSON.stringify(items) 
         };
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+        return { 
+            statusCode: 500, 
+            headers: {
+                "Access-Control-Allow-Origin": "*",  // Allow all origins (change to specific domain in future)
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization"
+            },
+            body: JSON.stringify({ error: error.message }) };
     }
 }
