@@ -19,7 +19,6 @@ exports.handler = async (event) => {
 
         const query = {
             ...(category && { category: new RegExp(category, "i") }),
-            ...(username && { username }) 
           };
         const sort = sortField ? { [sortField]: sortOrder === "desc" ? -1 : 1 } : {};
 
